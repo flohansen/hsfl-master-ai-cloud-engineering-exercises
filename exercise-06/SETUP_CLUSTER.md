@@ -1,0 +1,76 @@
+# Installation notes
+
+## Setup VirtualBox Guest
+
+	sudo modprobe overlay
+	sudo modprobe br_netfilter
+
+	sudo vim /etc/sysctl.d/k8s.conf
+	# Add the following lines
+	# net.bridge.bridge-nf-call-iptables = 1 
+	# net.ipv4.ip_forward = 1 
+	# net.bridge.bridge-nf-call-ip6tables = 1
+
+	sudo sysctl --system
+	sudo swapoff -a
+
+## Install container runtime
+
+### Step 1: Install containerd
+
+	wget https://github.com/containerd/containerd/releases/download/v1.6.25/containerd-1.6.25-linux-amd64.tar.gz
+	sudo tar Cxzvf /usr/local containerd-1.6.25-linux-amd64.tar.gz
+
+### Step 2: Enable containerd service
+
+	wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+	sudo mv containerd.service /usr/lib/systemd/system/
+	sudo systemctl enable --now containerd
+
+### Step 3: Install runc
+
+	wget https://github.com/opencontainers/runc/releases/download/v1.1.10/runc.amd64
+	sudo install -m 755 runc.amd64 /usr/local/sbin/runc
+
+### Step 4: Reload daemon
+
+	sudo systemctl daemon-reload
+
+## Install Kubernetes
+
+	sudo apt-get update
+	sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+	sudo mkdir -p /etc/apt/keyrings
+	curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+	echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+	sudo apt-get update
+	sudo apt-get install -y kubelet kubeadm kubectl
+	sudo apt-mark hold kubelet kubeadm kubectl
+
+## Create Kubernetes Control Panel Node
+
+### Initialize Node as Control Panel Node
+
+	sudo kubeadm init
+
+### Create configuration
+
+	mkdir -p $HOME/.kube
+	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+### Setup Container Network Interface
+
+	wget https://docs.projectcalico.org/manifests/calico.yaml
+	kubectl apply -f calico.yaml
+
+## Create Kubernetes Worker Node
+
+On control plane:
+
+	sudo kubeadm create token
+	openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+
+On worker nodes:
+
+	kubeadm join --token <token> <control-plane-host>:<control-plane-port> --discovery-token-ca-cert-hash sha256:<hash>	
