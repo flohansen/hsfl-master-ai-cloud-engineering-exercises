@@ -14,7 +14,7 @@
     * Graph: Memory Utilization
     * Graph: Network RX (Receive)
     * Graph: Network TX (Transmit)
-8. Exportieren Sie das Dashboard und fügen Sie es in Ihr Monorepo hinzu.
+8. Exportieren Sie das Dashboard und speichern Sie es in Ihrem Monorepo.
 
 ## Aufgabe 2: Tool für Cluster-Benchmark
 
