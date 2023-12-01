@@ -6,3 +6,4 @@
 * [Aufgabensatz 4](exercise-04) (SSR, API-Gateway, Proxy, Containerisierung, Continuous-Delivery)
 * [Aufgabensatz 5](exercise-05) (Container-Orchestration, Load-Balancing)
 * [Aufgabensatz 6](exercise-06) (Kubernetes)
+* [Aufgabensatz 7](exercise-07) (Monitoring, Load-Testing)
