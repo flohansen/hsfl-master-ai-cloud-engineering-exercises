@@ -7,3 +7,4 @@
 * [Aufgabensatz 5](exercises/exercise-05) (Container-Orchestration, Load-Balancing)
 * [Aufgabensatz 6](exercises/exercise-06) (Kubernetes)
 * [Aufgabensatz 7](exercises/exercise-07) (Monitoring, Load-Testing)
+* [Aufgabensatz 8](exercises/exercise-08) (Remote-Procedure-Calls, Request-Coalescing)
