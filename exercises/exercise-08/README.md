@@ -20,7 +20,7 @@ Aufgabe sollen Sie diesen weiterentwickeln.
 Sie haben bereits Microservices in Go entwickelt und in einem Kubernetes-Cluster
 bereitgestellt. Jetzt sollen Sie gRPC als Kommunikationsprotokoll zwischen den
 Microservices implementieren, um die Kommunikation effizienter und skalierbarer
-zu gestalten.
+zu gestalten. Das Beispiel aus der Vorlesung finden Sie [hier](examples/grpc).
 
 1. Wählen Sie einen oder mehrere Ihrer vorhandenen Microservices aus.
 2. Implementieren Sie gRPC-Protobuf-Datenstrukturen und -Dienste für die
@@ -37,7 +37,8 @@ zu gestalten.
 
 Um die Netzwerkbelastung zu reduzieren und die Effizienz der Anwendung zu
 verbessern, sollen Sie Request-Coalescing in einem oder mehreren Ihrer
-Microservices implementieren.
+Microservices implementieren. Das Beispiel aus der Vorlesung finden Sie
+[hier](examples/request-coalescing).
 
 1. Wählen Sie einen Microservice aus, der häufige Anfragen von Clients erhält.
 2. Implementieren Sie eine Request-Coalescing-Logik, die mehrere Anfragen zu einer
